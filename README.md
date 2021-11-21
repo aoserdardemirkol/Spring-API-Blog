@@ -69,28 +69,28 @@ JUnit test coverage 100% ve Integration testleri yapılmıştır.
 
 [![](./img/Integration%20Test.png "FolksDev & Kod Gemisi")](https://github.com/aoserdardemirkol/)
 
-|      Controller       | Metot  |            Adres            |                  Açıklama                           |        
-| :-------------------: | :----: | :-------------------------: | :-------------------------------------------------: |
-|  **UsersController**  |  GET   | localhost:8080/v1/users     | Bütün kullanıcıları listeler.                       |
-|                       |  GET   | localhost:8080/v1/users/0   | id değeri 0 olan kullanıcıyı getirir.               |
-|                       |  POST  | localhost:8080/v1/users     | Kullanıcı oluşturur.                                |
-|                       |  PUT   | localhost:8080/v1/users/0   | id değeri 0 olan kullanıcıyı günceller.             |
-|                       | DELETE | localhost:8080/v1/users/0   | id değerş 0 olan kullanıcıyı siler.                 |
-| **TagController**     |  GET   | localhost:8080/v1/tag       | Bütün Tag leri listeler.                            |
-|                       |  GET   | localhost:8080/v1/tag/0     | id değeri 0 olan Tag i getirir.                     |
-|                       |  POST  | localhost:8080/v1/tag       | Tag oluşturur.                                      |
-|                       |  PUT   | localhost:8080/v1/tag/0     | id değeri 0 olan Tag günceller.                     |
-|                       | DELETE | localhost:8080/v1/tag/0     | id değeri 0 olan Tag siler.                         |
-|  **EntryController**  |  GET   | localhost:8080/v1/entry     | Bütün gönderileri listeler.                         |
-|                       |  GET   | localhost:8080/v1/entry/0   | id değeri 0 olan gönderiyi getirir.                 |
-|                       |  POST  | localhost:8080/v1/entry/0   | id değeri 0 olan kullanıcıya ait gönderi oluşturur. |
-|                       |  PUT   | localhost:8080/v1/entry/0   | id değeri 0 olan gönderiyi günceller.               |
-|                       | DELETE | localhost:8080/v1/entry/0   | id değeri 0 olan gönderiyi siler.                   |
-| **CommentController** |  GET   | localhost:8080/v1/comment   | Bütün yorumları listeler.                           |
-|                       |  GET   | localhost:8080/v1/comment/0 | id değeri 0 olan yorumu getirir.                    |
-|                       |  POST  | localhost:8080/v1/comment   | Yorum oluşturur                                     |
-|                       |  PUT   | localhost:8080/v1/comment/0 | id değeri 0 olan yorumu günceller.                  |
-|                       | DELETE | localhost:8080/v1/comment/0 | id değeri 0 olan yorumu siler.                      |
+|      Controller       | Metot  |     Adres     |                  Açıklama                           |        
+| :-------------------: | :----: | :-----------: | :-------------------------------------------------: |
+|  **UsersController**  |  GET   | /v1/users     | Bütün kullanıcıları listeler.                       |
+|                       |  GET   | /v1/users/0   | id değeri 0 olan kullanıcıyı getirir.               |
+|                       |  POST  | /v1/users     | Kullanıcı oluşturur.                                |
+|                       |  PUT   | /v1/users/0   | id değeri 0 olan kullanıcıyı günceller.             |
+|                       | DELETE | /v1/users/0   | id değerş 0 olan kullanıcıyı siler.                 |
+| **TagController**     |  GET   | /v1/tag       | Bütün Tag leri listeler.                            |
+|                       |  GET   | /v1/tag/0     | id değeri 0 olan Tag i getirir.                     |
+|                       |  POST  | /v1/tag       | Tag oluşturur.                                      |
+|                       |  PUT   | /v1/tag/0     | id değeri 0 olan Tag günceller.                     |
+|                       | DELETE | /v1/tag/0     | id değeri 0 olan Tag siler.                         |
+|  **EntryController**  |  GET   | /v1/entry     | Bütün gönderileri listeler.                         |
+|                       |  GET   | /v1/entry/0   | id değeri 0 olan gönderiyi getirir.                 |
+|                       |  POST  | /v1/entry/0   | id değeri 0 olan kullanıcıya ait gönderi oluşturur. |
+|                       |  PUT   | /v1/entry/0   | id değeri 0 olan gönderiyi günceller.               |
+|                       | DELETE | /v1/entry/0   | id değeri 0 olan gönderiyi siler.                   |
+| **CommentController** |  GET   | /v1/comment   | Bütün yorumları listeler.                           |
+|                       |  GET   | /v1/comment/0 | id değeri 0 olan yorumu getirir.                    |
+|                       |  POST  | /v1/comment   | Yorum oluşturur                                     |
+|                       |  PUT   | /v1/comment/0 | id değeri 0 olan yorumu günceller.                  |
+|                       | DELETE | /v1/comment/0 | id değeri 0 olan yorumu siler.                      |
 
 Bu repo [Ali Osman Serdar Demirkol](https://github.com/aoserdardemirkol) tarafından bootcamp sürecinde
 oluşturulmuştur.
