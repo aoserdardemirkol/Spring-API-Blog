@@ -123,7 +123,6 @@ public class EntryControllerIT extends IntegrationTestSupport {
                 .andExpect(status().isNotFound());
     }
 
-
     @Test
     public void testUpdateEntry_whenIdAndRequestIsValid_shouldUpdateEntryAndReturnEntryDto() throws Exception {
         Entry entry = generateEntryToIT();
@@ -156,15 +155,22 @@ public class EntryControllerIT extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.content", is(request.getContent())))
                 .andExpect(jsonPath("$.users", notNullValue()));
 
-        Entry entryFromDb = entryRepository.findById(Objects.requireNonNull(entry.getId())).get();
+        Entry entryFromDb = entryRepository.findById(Objects.requireNonNull(entry.getId())).orElse(null);
         assertEquals(updatedEntry, entryFromDb);
     }
 
     @Test
     public void testUpdateEntry_whenIdIsNotExist_shouldReturnNotFoundException() throws Exception {
+        UpdateEntryRequest request = new UpdateEntryRequest(
+                "title",
+                "content",
+                List.of("tagId")
+        );
+
         this.mockMvc.perform(put(Url + "not-exist-id")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writer().withDefaultPrettyPrinter().writeValueAsString(request)))
+                .andExpect(status().isNotFound());
     }
 
     @Test

@@ -130,17 +130,21 @@ class UsersControllerIT extends IntegrationTestSupport {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(users.getId())))
-                .andExpect(jsonPath("$.username", is(request.getUsername())));
+                .andExpect(jsonPath("$.username", is(request.getUsername())))
+                .andExpect(jsonPath("$.gender", is(users.getGender().name())));
 
-        Users userFromDb = usersRepository.findById(Objects.requireNonNull(users.getId())).get();
+        Users userFromDb = usersRepository.findById(Objects.requireNonNull(users.getId())).orElse(null);
         assertEquals(updatedUser, userFromDb);
     }
 
     @Test
     public void testUpdateUsers_whenIdIsNotExist_shouldReturnNotFoundException() throws Exception {
+        UpdateUsersRequest request = generateUpdateUsersRequest();
+
         this.mockMvc.perform(put(Url + "not-exist-id")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writer().withDefaultPrettyPrinter().writeValueAsString(request)))
+                .andExpect(status().isNotFound());
     }
 
     @Test

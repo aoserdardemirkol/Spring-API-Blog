@@ -36,11 +36,8 @@ public class TestSupport {
 
     public Users generateUsers(){
         return new Users(
-                "authorId",
                 "username",
-                Gender.MALE,
-                Collections.emptyList(),
-                Collections.emptyList());
+                Gender.MALE);
     }
 
     public UsersDto generateUsersDto(){
@@ -83,9 +80,7 @@ public class TestSupport {
 
     public Tag generateTag(){
         return new Tag(
-                "tagId",
-                "name",
-                Collections.emptyList()
+                "name"
         );
     }
 
@@ -143,14 +138,11 @@ public class TestSupport {
 
     public Entry generateEntry(){
         return new Entry(
-                "entryId",
                 "title",
                 "content",
                 LocalDateTime.of(2021, 11, 14, 20, 30),
-                LocalDateTime.of(2021, 11, 14, 20, 30),
                 Collections.emptyList(),
-                generateUsers(),
-                Collections.emptyList()
+                generateUsers()
         );
     }
 
@@ -205,9 +197,7 @@ public class TestSupport {
 
     public Comment generateComment(){
         return new Comment(
-                "commentId",
                 "content",
-                LocalDateTime.of(2021, 11, 14, 20, 30),
                 LocalDateTime.of(2021, 11, 14, 20, 30),
                 generateEntry(),
                 generateUsers()

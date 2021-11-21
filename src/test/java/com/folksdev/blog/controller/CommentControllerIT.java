@@ -30,8 +30,8 @@ public class CommentControllerIT extends IntegrationTestSupport {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        List<Comment> entryList = commentRepository.findAll();
-        assertEquals(0, entryList.size());
+        List<Comment> commentList = commentRepository.findAll();
+        assertEquals(0, commentList.size());
     }
 
     @Test
@@ -74,10 +74,11 @@ public class CommentControllerIT extends IntegrationTestSupport {
                         .content(mapper.writer().withDefaultPrettyPrinter().writeValueAsString(commentRequest)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content", notNullValue()));
+                .andExpect(jsonPath("$.content", notNullValue()))
+                .andExpect(jsonPath("$.authorId", notNullValue()))
+                .andExpect(jsonPath("$.entryId", notNullValue()));
 
         List<Comment> commentList = commentRepository.findAll();
-
         assertEquals(0, commentList.size());
     }
 
@@ -108,12 +109,11 @@ public class CommentControllerIT extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.content", is("content")));
 
         List<Comment> commentList = commentRepository.findAll();
-
         assertEquals(1, commentList.size());
     }
 
     @Test
-    public void testDeleteCommentById_whenIdIsExist_shouldDeleteCommentAndReturnVoid() throws Exception {
+    public void testDeleteCommentById_whenIdExist_shouldDeleteCommentAndReturnVoid() throws Exception {
         Comment comment =  generateCommentToIT();
 
         this.mockMvc.perform(delete(Url + comment.getId())
@@ -148,18 +148,21 @@ public class CommentControllerIT extends IntegrationTestSupport {
                         .content(mapper.writer().withDefaultPrettyPrinter().writeValueAsString(request)))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id", is(comment.getId())))
-                .andExpect(jsonPath("$.content", is(request.getContent())));
+                .andExpect(jsonPath("$.id", is(updatedComment.getId())))
+                .andExpect(jsonPath("$.content", is(updatedComment.getContent())));
 
-        Comment commentFromDb = commentRepository.findById(Objects.requireNonNull(comment.getId())).get();
+        Comment commentFromDb = commentRepository.findById(Objects.requireNonNull(comment.getId())).orElse(null);
         assertEquals(updatedComment, commentFromDb);
     }
 
     @Test
     public void testUpdateComment_whenIdIsNotExist_shouldReturnNotFoundException() throws Exception {
+        UpdateCommentRequest request = generateUpdateCommentRequest();
+
         this.mockMvc.perform(put(Url + "not-exist-id")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writer().withDefaultPrettyPrinter().writeValueAsString(request)))
+                .andExpect(status().isNotFound());
     }
 
     @Test

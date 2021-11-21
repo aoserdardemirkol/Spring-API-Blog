@@ -80,13 +80,15 @@ class UsersServiceTest extends TestSupport {
         Users users = generateUsers();
         UsersDto usersDto = generateUsersDto();
 
-        Mockito.when(usersDtoConverter.convert(usersRepository.save(users))).thenReturn(usersDto);
+        Mockito.when(usersRepository.save(users)).thenReturn(users);
+        Mockito.when(usersDtoConverter.convert(users)).thenReturn(usersDto);
 
         UsersDto result = usersService.createUsers(usersRequest);
 
         assertEquals(usersDto, result);
 
-        Mockito.verify(usersDtoConverter).convert(usersRepository.save(users));
+        Mockito.verify(usersRepository).save(users);
+        Mockito.verify(usersDtoConverter).convert(users);
     }
 
     @Test
@@ -110,14 +112,16 @@ class UsersServiceTest extends TestSupport {
 
         Mockito.when(usersRepository.findById("userId")).thenReturn(Optional.ofNullable(users));
         assert users != null;
-        Mockito.when(usersDtoConverter.convert(usersRepository.save(users))).thenReturn(usersDto);
+        Mockito.when(usersRepository.save(users)).thenReturn(users);
+        Mockito.when(usersDtoConverter.convert(users)).thenReturn(usersDto);
 
         UsersDto result = usersService.updateUsers("userId", updateUsersRequest);
 
         assertEquals(usersDto, result);
 
         Mockito.verify(usersRepository).findById("userId");
-        Mockito.verify(usersDtoConverter).convert(usersRepository.save(users));
+        Mockito.verify(usersRepository).save(users);
+        Mockito.verify(usersDtoConverter).convert(users);
     }
 
     @Test
@@ -145,10 +149,8 @@ class UsersServiceTest extends TestSupport {
     @Test
     void testDeleteUserById_whenUsersIdExist_shouldReturnVoid(){
         Users users = generateUsers();
-        UsersDto usersDto = generateUsersDto();
 
         Mockito.when(usersRepository.findById("userId")).thenReturn(Optional.of(users));
-        Mockito.when(usersDtoConverter.convert(users)).thenReturn(usersDto);
 
         usersService.deleteUserById("userId");
 
@@ -162,6 +164,5 @@ class UsersServiceTest extends TestSupport {
         assertThrows(UsersNotFoundException.class, () -> usersService.deleteUserById("userId"));
 
         Mockito.verify(usersRepository).findById("userId");
-        Mockito.verifyNoInteractions(usersDtoConverter);
     }
 }

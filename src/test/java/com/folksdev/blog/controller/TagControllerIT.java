@@ -126,15 +126,18 @@ public class TagControllerIT extends IntegrationTestSupport {
                 .andExpect(jsonPath("$.id", is(tag.getId())))
                 .andExpect(jsonPath("$.name", is(request.getName())));
 
-        Tag userFromDb = tagRepository.findById(Objects.requireNonNull(tag.getId())).get();
+        Tag userFromDb = tagRepository.findById(Objects.requireNonNull(tag.getId())).orElse(null);
         assertEquals(updatedTag, userFromDb);
     }
 
     @Test
     public void testUpdateTag_whenIdIsNotExist_shouldReturnNotFoundException() throws Exception {
+        UpdateTagRequest request = generateUpdateTagRequest();
+
         this.mockMvc.perform(put(Url + "not-exist-id")
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(mapper.writer().withDefaultPrettyPrinter().writeValueAsString(request)))
+                .andExpect(status().isNotFound());
     }
 
     @Test
